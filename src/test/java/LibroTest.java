@@ -66,4 +66,25 @@ class LibroTest {
         NullPointerException.class,
         () -> new Libro("1984", null));
   }
+
+  @Test
+  void deberiaRechazarTituloVacio() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> new Libro(" ", "George Orwell"));
+  }
+
+  @Test
+  void deberiaRechazarAutorVacio() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> new Libro("1984", "\t"));
+  }
+
+  @Test
+  void deberiaRechazarTituloComparadoConNull() {
+    Libro libro = new Libro("1984", "George Orwell");
+
+    assertFalse(libro.esMismoTitulo(null));
+  }
 }

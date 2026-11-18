@@ -3,7 +3,7 @@ import java.util.Objects;
 /**
  * Representa un libro de la biblioteca universitaria.
  */
-public class Libro {
+public final class Libro {
   private final String titulo;
   private final String autor;
   private boolean disponible = true;
@@ -15,8 +15,16 @@ public class Libro {
    * @param autor autor del libro
    */
   public Libro(String titulo, String autor) {
-    this.titulo = Objects.requireNonNull(titulo, "titulo no puede ser null");
-    this.autor = Objects.requireNonNull(autor, "autor no puede ser null");
+    this.titulo = requireText(titulo, "titulo");
+    this.autor = requireText(autor, "autor");
+  }
+
+  private static String requireText(String value, String fieldName) {
+    Objects.requireNonNull(value, fieldName + " no puede ser null");
+    if (value.isBlank()) {
+      throw new IllegalArgumentException(fieldName + " no puede estar vacío");
+    }
+    return value;
   }
 
   /**
@@ -73,6 +81,6 @@ public class Libro {
    * @return true si ambos titulos tienen el mismo contenido
    */
   public boolean esMismoTitulo(String otroTitulo) {
-    return titulo.equals(otroTitulo);
+    return Objects.equals(titulo, otroTitulo);
   }
 }
