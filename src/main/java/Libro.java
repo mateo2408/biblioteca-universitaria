@@ -1,43 +1,78 @@
-package main.java;
+import java.util.Objects;
 
+/**
+ * Representa un libro de la biblioteca universitaria.
+ */
 public class Libro {
+  private final String titulo;
+  private final String autor;
+  private boolean disponible = true;
 
-    private String titulo;
-    private String autor;
-    private boolean disponible = true;
+  /**
+   * Crea un libro disponible.
+   *
+   * @param titulo titulo del libro
+   * @param autor autor del libro
+   */
+  public Libro(String titulo, String autor) {
+    this.titulo = Objects.requireNonNull(titulo, "titulo no puede ser null");
+    this.autor = Objects.requireNonNull(autor, "autor no puede ser null");
+  }
 
-    public Libro(String titulo, String autor) {
-        this.titulo = titulo;
-        this.autor = autor;
+  /**
+   * Retorna el titulo del libro.
+   *
+   * @return titulo del libro
+   */
+  public String getTitulo() {
+    return titulo;
+  }
+
+  /**
+   * Retorna el autor del libro.
+   *
+   * @return autor del libro
+   */
+  public String getAutor() {
+    return autor;
+  }
+
+  /**
+   * Indica si el libro esta disponible.
+   *
+   * @return true si esta disponible
+   */
+  public boolean estaDisponible() {
+    return disponible;
+  }
+
+  /**
+   * Marca el libro como prestado.
+   *
+   * @throws IllegalStateException si el libro ya esta prestado
+   */
+  public void prestar() {
+    if (!disponible) {
+      throw new IllegalStateException("Libro no disponible");
     }
 
-    public String getTitulo() {
-        return titulo;
-    }
+    disponible = false;
+  }
 
-    public String getAutor() {
-        return autor;
-    }
+  /**
+   * Marca el libro como disponible.
+   */
+  public void devolver() {
+    disponible = true;
+  }
 
-    public boolean estaDisponible() {
-        return disponible;
-    }
-
-    public void prestar() {
-        if (!disponible) {
-            throw new IllegalStateException(
-                "Libro no disponible"
-            );
-        }
-
-        disponible = false;
-    }
-
-    public void devolver() {
-        disponible = true;
-    }
-
-    public boolean esMismoTitulo(String otroTitulo) {
-        return titulo != null && titulo.equals(otroTitulo);
-    }
+  /**
+   * Compara este titulo con otro por contenido.
+   *
+   * @param otroTitulo titulo que se desea comparar
+   * @return true si ambos titulos tienen el mismo contenido
+   */
+  public boolean esMismoTitulo(String otroTitulo) {
+    return titulo.equals(otroTitulo);
+  }
 }
